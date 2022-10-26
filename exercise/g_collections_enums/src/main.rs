@@ -47,15 +47,25 @@ fn main() {
 
     for coord in &arrow_coords {
         coord.print_description();
-        if coord.distance_from_center() < 1.0 {
-            shots.push(Shot::Bullseye);
-        }
-        if coord.distance_from_center() > 1.0 && coord.distance_from_center() < 5.0  {
-            shots.push(Shot::Hit(coord.distance_from_center()));
-        }
-        if coord.distance_from_center() > 5.0 {
-            shots.push(Shot::Miss);
-        }
+        let shot = match coord.distance_from_center() {
+            x if x < 1.0 => Shot::Bullseye,
+            x if x < 5.0 => Shot::Hit(x),
+            _ => Shot::Miss,
+        };
+        shots.push(shot);
+
+        // Instead of the below, do the above, way cooler and more concise !!! Yay
+
+//        if coord.distance_from_center() < 1.0 {
+//            shots.push(Shot::Bullseye);
+//        }
+//        if coord.distance_from_center() > 1.0 && coord.distance_from_center() < 5.0  {
+//            shots.push(Shot::Hit(coord.distance_from_center()));
+//        }
+//        if coord.distance_from_center() > 5.0 {
+//            shots.push(Shot::Miss);
+//        }
+
     }
 
     let mut total = 0;
